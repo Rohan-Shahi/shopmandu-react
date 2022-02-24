@@ -7,6 +7,7 @@ import ProductCard from "../components/ProductCard";
 
 export default function ProductContainer(props) {
   const {
+    filterProduct,
     userCart,
     setUserCart,
     updateCart,
@@ -31,6 +32,7 @@ export default function ProductContainer(props) {
     setCountItem(countItem - product.count);
   };
 
+  //for filtering products
   const applyFilter = () => {
     let selectorValue = document.getElementById("filter-select").value;
     let minValue = document.getElementById("filter-min").value;
@@ -38,7 +40,7 @@ export default function ProductContainer(props) {
     let filteredProduct;
 
     if (selectorValue !== null && minValue !== "" && maxValue !== "") {
-      filteredProduct = productList.filter((product) => {
+      filteredProduct = filterProduct.filter((product) => {
         let newPrice = product.price.slice(1, product.price.length);
         let nepaliPrice = Number(newPrice) * 119;
         return (
@@ -47,7 +49,7 @@ export default function ProductContainer(props) {
         );
       });
     } else if (selectorValue) {
-      filteredProduct = productList.filter((product) => {
+      filteredProduct = filterProduct.filter((product) => {
         return product.category[1] === selectorValue;
       });
     }
@@ -61,6 +63,7 @@ export default function ProductContainer(props) {
     <>
       {toggleCart ? (
         <div className="product-container">
+
           <div className="cart-list">
             <div
               className="card border-success mb-3"
@@ -125,6 +128,7 @@ export default function ProductContainer(props) {
                   id={product.id}
                   updateCart={updateCart}
                   product={product}
+                  productDate = {product.createDate}
                 />
               </div>
             ))}
@@ -216,6 +220,7 @@ export default function ProductContainer(props) {
                   id={product.id}
                   updateCart={updateCart}
                   product={product}
+                  productDate = {product.createDate}
                 />
               </div>
             ))}

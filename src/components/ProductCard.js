@@ -6,9 +6,10 @@ import "./style.css";
 
 export default function ProductCard(props) {
 
+
   const [productCount,setProductCount] = useState(0);
 
-  const {productName,price,stock,imgName,category,id,updateCart,product} = props;
+  const {productName,price,stock,imgName,category,id,updateCart,product,productDate} = props;
 
   let newPrice = price.slice(1,price.length);
   let nepaliPrice = Number(newPrice) * 119;
@@ -44,7 +45,7 @@ export default function ProductCard(props) {
             <p>Rs: {nepaliPrice}</p>
             <span>Stocks left: {stock}</span>
           </div>
-          <p>Released on: 18-02-2022</p>
+          <p>Released on: {new Date(productDate).toString().slice(0,15)}</p>
         </div>
 
         <button onClick={()=>{updateCart(product,productCount)}} className="btn btn-primary addBtn">Add to Cart</button>
