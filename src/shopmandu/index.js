@@ -23,9 +23,11 @@ export default function Shopmandu() {
   const updateCart = (item, count) => {
 
     //try 3
+    
     let index = userCart.findIndex(product => product.id === item.id);
    
     if(index < 0){
+    
       item.count = count;
       setUserCart([...userCart,item]);
     }else{

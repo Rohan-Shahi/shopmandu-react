@@ -19,8 +19,7 @@ export default function ProductContainer(props) {
     setProductList,
   } = props;
 
-  const [total, setTotal] = useState(0);
-
+  let total = 0;
 
   //For removing cart item
 
@@ -63,7 +62,6 @@ export default function ProductContainer(props) {
     <>
       {toggleCart ? (
         <div className="product-container">
-
           <div className="cart-list">
             <div
               className="card border-success mb-3"
@@ -83,8 +81,11 @@ export default function ProductContainer(props) {
 
                   <div className="cart-name">
                     {/* {setTotal(total + Number(item.price) * Number(item.count))} */}
+                    <span style={{display: 'none'}}>{total += (item.price.slice(1, item.price.length) * 119) * item.count}</span> 
                     <p>{item.name}</p>
-                    <span>{item.price}</span>
+                    <span>
+                      Rs {item.price.slice(1, item.price.length) * 119}
+                    </span>
                   </div>
 
                   <div className="cart-stock">
@@ -102,7 +103,9 @@ export default function ProductContainer(props) {
               ))}
 
               <div className="card-footer bg-transparent border-dark cart-bottom">
-                <p>Total Amount: ${total}</p>
+                <p>
+                  Total Amount: Rs {total}
+                </p>
                 <button className="checkout-btn">Checkout</button>
               </div>
             </div>
@@ -128,7 +131,7 @@ export default function ProductContainer(props) {
                   id={product.id}
                   updateCart={updateCart}
                   product={product}
-                  productDate = {product.createDate}
+                  productDate={product.createDate}
                 />
               </div>
             ))}
@@ -220,7 +223,7 @@ export default function ProductContainer(props) {
                   id={product.id}
                   updateCart={updateCart}
                   product={product}
-                  productDate = {product.createDate}
+                  productDate={product.createDate}
                 />
               </div>
             ))}

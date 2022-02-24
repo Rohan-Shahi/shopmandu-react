@@ -98,8 +98,8 @@
 }
 
 .cart-card .cart-img{
-    width: 40px;
-    height: 40px;
+    width: 70px;
+    height: 45px;
     margin-right: 1rem;
 }
 
@@ -110,7 +110,7 @@
 
 .cart-name{
     margin-right: 1rem;
-    flex: 50%;
+    flex: 70%;
 }
 
 .cart-remove{
