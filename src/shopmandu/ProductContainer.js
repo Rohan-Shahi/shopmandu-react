@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/js/dist/offcanvas.js";
@@ -14,7 +14,6 @@ export default function ProductContainer(props) {
     productList,
     toggleCart,
     setCountItem,
-    setToggleCart,
     countItem,
     setProductList,
   } = props;
@@ -38,6 +37,7 @@ export default function ProductContainer(props) {
     let maxValue = document.getElementById("filter-max").value;
     let filteredProduct;
 
+    if( selectorValue !== ''){
     if (selectorValue !== null && minValue !== "" && maxValue !== "") {
       filteredProduct = filterProduct.filter((product) => {
         let newPrice = product.price.slice(1, product.price.length);
@@ -53,6 +53,7 @@ export default function ProductContainer(props) {
       });
     }
     setProductList(filteredProduct);
+  }
   };
 
   // const [showFilter,setShowFilter] = useState(false);
@@ -183,6 +184,7 @@ export default function ProductContainer(props) {
 
                 <h6>Category</h6>
                 <select id="filter-select" className="category-select">
+                  <option value="">Select Category</option>
                   <option value="laptop">Laptop</option>
                   <option value="mobile">Mobile</option>
                   <option value="keyboard">Keyboard</option>

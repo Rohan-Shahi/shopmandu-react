@@ -5,7 +5,7 @@ import ProductContainer from "./ProductContainer";
 
 export default function Shopmandu() {
   const [productList, setProductList] = useState([]);
-  const [filterProduct,setFilterProduct] = useState([]);
+  const [filterProduct, setFilterProduct] = useState([]);
   const [toggleCart, setToggleCart] = useState(false);
   const [userCart, setUserCart] = useState([]);
   const [countItem, setCountItem] = useState(0);
@@ -21,36 +21,35 @@ export default function Shopmandu() {
   };
 
   const updateCart = (item, count) => {
-
     //try 3
-    
-    let index = userCart.findIndex(product => product.id === item.id);
-   
-    if(index < 0){
-    
-      item.count = count;
-      setUserCart([...userCart,item]);
-    }else{
-      userCart[index].count += count;
-      setUserCart([...userCart]);
+    if (count !== 0) {
+      let index = userCart.findIndex((product) => product.id === item.id);
+
+      if (index < 0) {
+        item.count = count;
+        setUserCart([...userCart, item]);
+      } else {
+        userCart[index].count += count;
+        setUserCart([...userCart]);
+      }
+      setCountItem(countItem + count);
     }
-    setCountItem(countItem + count);
 
     //try 2
     // let check = false;
-  
+
     // let newCart = userCart.map((product)=>{
     //   console.log(product)
     //   if(product.id === item.id){
     //     check = true;
     //     return {product , count : product.count + count};
-        
+
     //   }else{
     //     return({product , count: count})
-        
+
     //   }
     // })
-    
+
     // console.log(newCart)
 
     // if(userCart.length === 0){
@@ -63,7 +62,6 @@ export default function Shopmandu() {
     //   console.log("i am here")
     // }
     // setCountItem(countItem + count);
-
 
     // try 1
     // if(item){
@@ -83,7 +81,7 @@ export default function Shopmandu() {
     // }else{
     //     newCart = item;
     // }
-    
+
     // console.log(userCart)
     // console.log(newCart)
 
@@ -95,15 +93,11 @@ export default function Shopmandu() {
     // count !== 0 ? setUserCart([...userCart, item]) : setUserCart([...userCart]);
     // setCountItem(countItem + count);
     // item.count = count;
-
-
-
   };
 
   useEffect(() => {
     fetchProduct();
   }, []);
-  
 
   return (
     <>
@@ -114,7 +108,7 @@ export default function Shopmandu() {
       />
       <ProductContainer
         setUserCart={setUserCart}
-        filterProduct = {filterProduct}
+        filterProduct={filterProduct}
         userCart={userCart}
         updateCart={updateCart}
         productList={productList}
@@ -122,7 +116,7 @@ export default function Shopmandu() {
         setToggleCart={setToggleCart}
         setCountItem={setCountItem}
         countItem={countItem}
-        setProductList = {setProductList}
+        setProductList={setProductList}
       />
     </>
   );

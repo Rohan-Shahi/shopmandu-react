@@ -10,7 +10,7 @@ export default function Navbar(props) {
     <>
       <nav className="navbar">
         <div className="container-fluid">
-          <a className="navbar-brand">Shopmandu</a>
+          <h5>Shopmandu</h5>
        
             <ul className="navbar-list">
               <li>Home</li>

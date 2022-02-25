@@ -9,7 +9,7 @@ export default function ProductCard(props) {
 
   const [productCount,setProductCount] = useState(0);
 
-  const {productName,price,stock,imgName,category,id,updateCart,product,productDate} = props;
+  const {productName,price,stock,imgName,updateCart,product,productDate} = props;
 
   let newPrice = price.slice(1,price.length);
   let nepaliPrice = Number(newPrice) * 119;
