@@ -190,5 +190,28 @@ h6{
     margin-left: 1rem;
 }
 
+/* Styling product details */
+
+.product-box {
+  
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 8px 0 rgba(151, 146, 146, 0.2), 0 6px 20px 0 rgba(161, 152, 152, 0.19);
+
+}
+
+.product-img{
+
+    display: flex;
+    align-items: center;
+    width: 400px;
+    height: 400px;
+}
+
+.product-img img{
+    width: 100%;
+}
 
 

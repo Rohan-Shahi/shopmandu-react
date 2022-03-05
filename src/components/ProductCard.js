@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import { Link } from "react-router-dom";
 import CartAddDec from "./CartAddDec";
 import "./style.css";
 
@@ -9,7 +8,7 @@ export default function ProductCard(props) {
 
   const [productCount,setProductCount] = useState(0);
 
-  const {productName,price,stock,imgName,updateCart,product,productDate} = props;
+  const {productName,price,stock,imgName,updateCart,product,productDate,id} = props;
 
   let newPrice = price.slice(1,price.length);
   let nepaliPrice = Number(newPrice) * 119;
@@ -27,6 +26,7 @@ export default function ProductCard(props) {
 
   return (
     <div className="card" style={{ width: "18rem" }}>
+      <Link to={`product/${id}`}>
       <div className="card-img">
         <img
           src = {imgSrc} 
@@ -35,6 +35,7 @@ export default function ProductCard(props) {
           
         />
       </div>
+      </Link>
 
       <CartAddDec productCount={productCount} increaseProduct={increaseProduct} decreaseProduct={decreaseProduct}/>
       

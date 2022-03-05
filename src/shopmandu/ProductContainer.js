@@ -1,22 +1,43 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import React, { useEffect } from "react";
 import "bootstrap/js/dist/offcanvas.js";
 import "./style.css";
 import ProductCard from "../components/ProductCard";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { setProductList } from "../redux/actions/productAction";
+import { filterProduct } from "../redux/actions/filterAction";
+import { useDispatch } from "react-redux";
+import { setUserCart } from "../redux/actions/cartAction";
+import { setCountItem } from "../redux/actions/itemCountAction";
 
 export default function ProductContainer(props) {
-  const {
-    filterProduct,
-    userCart,
-    setUserCart,
-    updateCart,
-    productList,
-    toggleCart,
-    setCountItem,
-    countItem,
-    setProductList,
-  } = props;
+  const { updateCart } = props;
+
+  const productList = useSelector((state) => {
+    return state.product.productList;
+  });
+
+  const userCart = useSelector((state) => {
+    return state.cart.cartItems;
+  });
+
+  const toggleCart = useSelector((state) => {
+    return state.cart.toggleCart;
+  });
+
+  const countItem = useSelector((state) => {
+    return state.countItem.count;
+  });
+
+  const filterProd = useSelector((state) => {
+    return state.filter.filterProduct;
+  })
+
+  useEffect(() => {
+      dispatch(filterProduct())
+  },[])
+
+  const dispatch = useDispatch();
 
   let total = 0;
 
@@ -26,8 +47,8 @@ export default function ProductContainer(props) {
     let cartItems = userCart.filter((item) => {
       return item.id !== product.id;
     });
-    setUserCart(cartItems);
-    setCountItem(countItem - product.count);
+    dispatch(setUserCart(cartItems));
+    dispatch(setCountItem(countItem - product.count));
   };
 
   //for filtering products
@@ -36,28 +57,27 @@ export default function ProductContainer(props) {
     let minValue = document.getElementById("filter-min").value;
     let maxValue = document.getElementById("filter-max").value;
     let filteredProduct;
+    console.log(filterProd);
 
-    if( selectorValue !== ''){
-    if (selectorValue !== null && minValue !== "" && maxValue !== "") {
-      filteredProduct = filterProduct.filter((product) => {
-        let newPrice = product.price.slice(1, product.price.length);
-        let nepaliPrice = Number(newPrice) * 119;
-        return (
-          (nepaliPrice >= minValue && nepaliPrice) <= maxValue &&
-          product.category[1] === selectorValue
-        );
-      });
-    } else if (selectorValue) {
-      filteredProduct = filterProduct.filter((product) => {
-        return product.category[1] === selectorValue;
-      });
+    if (selectorValue !== "") {
+      if (selectorValue !== null && minValue !== "" && maxValue !== "") {
+        filteredProduct = filterProd.filter((product) => {
+          let newPrice = product.price.slice(1, product.price.length);
+          let nepaliPrice = Number(newPrice) * 119;
+          return (
+            (nepaliPrice >= minValue && nepaliPrice) <= maxValue &&
+            product.category[1] === selectorValue
+          );
+        });
+      } else if (selectorValue) {
+        filteredProduct = filterProd.filter((product) => {
+          return product.category[1] === selectorValue;
+        });
+      }
+      console.log(filteredProduct);
+      dispatch(setProductList(filteredProduct));
     }
-    setProductList(filteredProduct);
-  }
   };
-
-  // const [showFilter,setShowFilter] = useState(false);
-  // console.log(productList);
 
   return (
     <>
@@ -82,7 +102,14 @@ export default function ProductContainer(props) {
 
                   <div className="cart-name">
                     {/* {setTotal(total + Number(item.price) * Number(item.count))} */}
-                    <span style={{display: 'none'}}>{total += (item.price.slice(1, item.price.length) * 119) * item.count}</span> 
+                    <span style={{ display: "none" }}>
+                      {
+                        (total +=
+                          item.price.slice(1, item.price.length) *
+                          119 *
+                          item.count)
+                      }
+                    </span>
                     <p>{item.name}</p>
                     <span>
                       Rs {item.price.slice(1, item.price.length) * 119}
@@ -104,10 +131,15 @@ export default function ProductContainer(props) {
               ))}
 
               <div className="card-footer bg-transparent border-dark cart-bottom">
-                <p>
-                  Total Amount: Rs {total}
-                </p>
-                <button className="checkout-btn">Checkout</button>
+                <p>Total Amount: Rs {total}</p>
+                <button className="checkout-btn">
+                  <Link
+                    style={{ color: "white", textDecoration: "none" }}
+                    to="/checkout"
+                  >
+                    Checkout
+                  </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -122,8 +154,10 @@ export default function ProductContainer(props) {
 
           <div className="row product-row">
             {productList.map((product) => (
+              
               <div key={product.id} className="col-md-3">
-                <ProductCard
+              
+               <ProductCard
                   productName={product.name}
                   price={product.price}
                   stock={product.stock}
@@ -134,6 +168,7 @@ export default function ProductContainer(props) {
                   product={product}
                   productDate={product.createDate}
                 />
+            
               </div>
             ))}
           </div>
